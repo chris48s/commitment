@@ -5,6 +5,10 @@
 
 Python 3 wrapper to push data to a GitHub repo using the GitHub [contents api](https://developer.github.com/v3/repos/contents/)
 
+## Installation
+
+`pip install commitment`
+
 ## Platform Support
 
 `commitment` is tested under Python 3.4, 3.5 and 3.6

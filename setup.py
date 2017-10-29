@@ -11,6 +11,7 @@ def _get_description():
 
 setup(
     name='commitment',
+    version='1.0.0',
     author="chris48s",
     license="MIT",
     description='Python 3 wrapper to push data to a GitHub repo using the GitHub contents api',
