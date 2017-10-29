@@ -1,6 +1,13 @@
 # commitment
 
+[![Build Status](https://travis-ci.org/chris48s/commitment.svg?branch=master)](https://travis-ci.org/chris48s/commitment)
+[![Coverage Status](https://coveralls.io/repos/github/chris48s/commitment/badge.svg?branch=master)](https://coveralls.io/github/chris48s/commitment?branch=master)
+
 Python 3 wrapper to push data to a GitHub repo using the GitHub [contents api](https://developer.github.com/v3/repos/contents/)
+
+## Platform Support
+
+`commitment` is tested under Python 3.4, 3.5 and 3.6
 
 ## Usage
 
