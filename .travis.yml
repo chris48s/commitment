@@ -1,0 +1,15 @@
+sudo: false
+dist: trusty
+language: python
+python:
+  - '3.4'
+  - '3.5'
+  - '3.6'
+install:
+  - pip install --upgrade pip
+  - pip install -r testing_requirements.txt
+script:
+  - python setup.py install
+  - coverage run --source=commitment ./tests.py
+after_success:
+  - coveralls
