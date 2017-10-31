@@ -113,7 +113,7 @@ class GitHubClientTests(unittest.TestCase):
     def test_push_file_remote_file_not_equal_local_file(self):
         g = GitHubClient(self.creds)
         res = g.push_file('bar', 'foo/bar.baz', 'my commit message')
-        # If no remote content != local content
+        # If remote content != local content
         # push_file() should push the local content
         self.assertEqual(201, res)
 
