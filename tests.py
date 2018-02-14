@@ -10,15 +10,15 @@ from unittest import mock
 
 
 # GitHubClient._get_file() mocks
-def mock_get_file_return_foo(obj, filename):
+def mock_get_file_return_foo(obj, filename, branch):
     return b'foo'
 
-def mock_get_file_raise_500(obj, filename):
+def mock_get_file_raise_500(obj, filename, branch):
     resp = requests.Response()
     resp.status_code = 500
     raise requests.exceptions.HTTPError(response=resp)
 
-def mock_get_file_raise_404(obj, filename):
+def mock_get_file_raise_404(obj, filename, branch):
     resp = requests.Response()
     resp.status_code = 404
     raise requests.exceptions.HTTPError(response=resp)
@@ -45,7 +45,6 @@ class GitHubClientTests(unittest.TestCase):
     def setUp(self):
         self.creds = GitHubCredentials(
             repo="myuser/somerepo",
-            branch='branch',
             name="myuser",
             email="chad.fernandez@example.com",
             api_key="f00b42",
@@ -61,9 +60,9 @@ class GitHubClientTests(unittest.TestCase):
 
     def test_get_payload_utf8_no_parent(self):
         g = GitHubClient(self.creds)
-        payload = json.loads(g._get_payload("abcd", "commit my file"))
+        payload = json.loads(g._get_payload("abcd", "commit my file", "branch"))
         self.assertEqual("commit my file", payload['message'])
-        self.assertEqual(self.creds.branch, payload['branch'])
+        self.assertEqual('branch', payload['branch'])
         self.assertEqual(self.creds.name, payload['committer']['name'])
         self.assertEqual(self.creds.email, payload['committer']['email'])
         self.assertEqual('YWJjZA==', payload['content'])
@@ -73,12 +72,12 @@ class GitHubClientTests(unittest.TestCase):
         g = GitHubClient(self.creds)
         content = b'you\xe2\x80\x99re'.decode('windows-1252')
         payload = json.loads(
-            g._get_payload(content, "commit my file", encoding='windows-1252'))
+            g._get_payload(content, "commit my file", "branch", encoding='windows-1252'))
         self.assertEqual(b'you\xe2\x80\x99re', base64.b64decode(payload['content']))
 
     def test_get_payload_with_parent(self):
         g = GitHubClient(self.creds)
-        payload = json.loads(g._get_payload("abcd", "commit my file", parent_sha='xyz'))
+        payload = json.loads(g._get_payload("abcd", "commit my file", "branch", parent_sha='xyz'))
         self.assertEqual('xyz', payload['sha'])
 
     def test_get_blob_sha_invalid(self):
