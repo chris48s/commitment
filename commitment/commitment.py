@@ -28,6 +28,18 @@ class GitHubClient:
         self.credentials = credentials
         self.base_url = 'https://api.github.com/'
 
+    def _request(self, method, url, payload):
+        r = requests.request(
+            method,
+            url,
+            data=payload,
+            headers={'Authorization': 'token %s' % (self.credentials.api_key)}
+        )
+        if r.status_code not in [200, 201]:
+            print(r.json())
+        r.raise_for_status()
+        return r.status_code
+
     def _get_payload(self, content, message, branch, parent_sha=None, encoding='utf-8'):
         # assemble a payload we can use to make a request
         # to the /contents endpoint in the GitHub API
@@ -56,7 +68,7 @@ class GitHubClient:
         )
         r = requests.get(url)
         r.raise_for_status()
-        return r.content
+        return r
 
     def _get_blob_sha(self, data):
         # work out the git SHA of a blob
@@ -67,9 +79,38 @@ class GitHubClient:
         s.update(data)
         return s.hexdigest()
 
+    def _get_head_sha(self, branch):
+        # get the HEAD commit SHA of `branch`
+        url = self.base_url + 'repos/%s/git/refs/heads/%s' % (
+            urllib.parse.quote(self.credentials.repo),
+            urllib.parse.quote(branch)
+        )
+        r = requests.get(url)
+        r.raise_for_status()
+        data = r.json()
+        return data['object']['sha']
+
+    def get_file_bytes(self, filename, branch='master'):
+        r = self.get_file(filename, branch)
+        return r.content
+
+    def get_file_str(self, filename, branch='master'):
+        r = self.get_file(filename, branch)
+        return r.text
+
+    def create_branch(self, new_branch, base_branch='master'):
+        url = self.base_url + 'repos/%s/git/refs' % (
+            urllib.parse.quote(self.credentials.repo)
+        )
+        payload = json.dumps({
+            "ref": "refs/heads/%s" % (new_branch),
+            "sha": self._get_head_sha(base_branch)
+        })
+        return self._request('POST', url, payload)
+
     def push_file(self, content, filename, message, branch='master', encoding='utf-8'):
         try:
-            repo_content = self._get_file(filename, branch)
+            repo_content = self.get_file_bytes(filename, branch)
             # check if we need to do a commit because the /contents
             # endpoint will allow us to make an empty commit
             if force_bytes(content, encoding) == repo_content:
@@ -93,15 +134,19 @@ class GitHubClient:
                 urllib.parse.quote(self.credentials.repo),
                 urllib.parse.quote(filename)
             )
-            r = requests.put(
-                url,
-                data=payload,
-                headers={'Authorization': 'token %s' % (self.credentials.api_key)}
-            )
-            if r.status_code not in [200, 201]:
-                print(r.json())
-            r.raise_for_status()
-
-            return r.status_code
+            return self._request('PUT', url, payload)
         else:
             return None
+
+    def open_pull_request(self, head_branch, title, body, base_branch='master'):
+        url = self.base_url + 'repos/%s/pulls' % (
+            urllib.parse.quote(self.credentials.repo)
+        )
+        payload = json.dumps({
+            "title": title,
+            "body": body,
+            "head": head_branch,
+            "base": base_branch,
+            "maintainer_can_modify": True,
+        })
+        return self._request('POST', url, payload)

@@ -24,13 +24,13 @@ def mock_get_file_raise_404(obj, filename, branch):
     raise requests.exceptions.HTTPError(response=resp)
 
 
-# requests.put() mocks
-def mock_put_success(obj, *args, **kwargs):
+# request mocks
+def mock_request_success(obj, *args, **kwargs):
     resp = requests.Response()
     resp.status_code = 201
     return resp
 
-def mock_put_failure(obj, *args, **kwargs):
+def mock_request_failure(obj, *args, **kwargs):
     resp = requests.Response()
     resp.status_code = 500
     return resp
@@ -90,7 +90,7 @@ class GitHubClientTests(unittest.TestCase):
         sha = g._get_blob_sha(b'bytes')
         self.assertEqual(40, len(sha))
 
-    @mock.patch("commitment.GitHubClient._get_file", mock_get_file_return_foo)
+    @mock.patch("commitment.GitHubClient.get_file_bytes", mock_get_file_return_foo)
     def test_push_file_remote_file_equals_local_file(self):
         g = GitHubClient(self.creds)
         res = g.push_file('foo', 'foo/bar.baz', 'my commit message')
@@ -98,8 +98,8 @@ class GitHubClientTests(unittest.TestCase):
         # the remote content push_file() should do nothing
         self.assertIsNone(res)
 
-    @mock.patch("commitment.GitHubClient._get_file", mock_get_file_raise_404)
-    @mock.patch('requests.put', mock_put_success)
+    @mock.patch("commitment.GitHubClient.get_file_bytes", mock_get_file_raise_404)
+    @mock.patch('requests.request', mock_request_success)
     def test_push_file_no_remote_file(self):
         g = GitHubClient(self.creds)
         res = g.push_file('foo', 'foo/bar.baz', 'my commit message')
@@ -107,8 +107,8 @@ class GitHubClientTests(unittest.TestCase):
         # push_file() should push the local content
         self.assertEqual(201, res)
 
-    @mock.patch("commitment.GitHubClient._get_file", mock_get_file_return_foo)
-    @mock.patch('requests.put', mock_put_success)
+    @mock.patch("commitment.GitHubClient.get_file_bytes", mock_get_file_return_foo)
+    @mock.patch('requests.request', mock_request_success)
     def test_push_file_remote_file_not_equal_local_file(self):
         g = GitHubClient(self.creds)
         res = g.push_file('bar', 'foo/bar.baz', 'my commit message')
@@ -116,7 +116,7 @@ class GitHubClientTests(unittest.TestCase):
         # push_file() should push the local content
         self.assertEqual(201, res)
 
-    @mock.patch("commitment.GitHubClient._get_file", mock_get_file_raise_500)
+    @mock.patch("commitment.GitHubClient.get_file_bytes", mock_get_file_raise_500)
     def test_push_file_remote_file_raises_500(self):
         g = GitHubClient(self.creds)
         # if getting remote content raises
@@ -124,8 +124,8 @@ class GitHubClientTests(unittest.TestCase):
         with self.assertRaises(requests.exceptions.HTTPError):
             res = g.push_file('foo', 'foo/bar.baz', 'my commit message')
 
-    @mock.patch("commitment.GitHubClient._get_file", mock_get_file_raise_404)
-    @mock.patch('requests.put', mock_put_failure)
+    @mock.patch("commitment.GitHubClient.get_file_bytes", mock_get_file_raise_404)
+    @mock.patch('requests.request', mock_request_failure)
     @mock.patch('requests.Response.json', mock_json)
     def test_push_file_put_failure(self):
         g = GitHubClient(self.creds)
@@ -133,6 +133,44 @@ class GitHubClientTests(unittest.TestCase):
         # push_file() should re-raise
         with self.assertRaises(requests.exceptions.HTTPError):
             res = g.push_file('foo', 'foo/bar.baz', 'my commit message')
+
+    @mock.patch('requests.get', mock_request_success)
+    @mock.patch('requests.Response.json', lambda x: {'object': { 'sha': 'foo' }})
+    def test_get_head_sha_success(self):
+        g = GitHubClient(self.creds)
+        self.assertEqual('foo', g._get_head_sha('master'))
+
+    @mock.patch('requests.get', mock_request_failure)
+    def test_get_head_sha_failure(self):
+        g = GitHubClient(self.creds)
+        with self.assertRaises(requests.exceptions.HTTPError):
+            g._get_head_sha('master')
+
+    @mock.patch('requests.request', mock_request_success)
+    def test_open_pull_request_success(self):
+        g = GitHubClient(self.creds)
+        self.assertEqual(201, g.open_pull_request('foo', 'bar', 'baz'))
+
+    @mock.patch('requests.request', mock_request_failure)
+    @mock.patch('requests.Response.json', mock_json)
+    def test_open_pull_request_failure(self):
+        g = GitHubClient(self.creds)
+        with self.assertRaises(requests.exceptions.HTTPError):
+            g.open_pull_request('foo', 'bar', 'baz')
+
+    @mock.patch("commitment.GitHubClient._get_head_sha", lambda x, y: 'foo')
+    @mock.patch('requests.request', mock_request_success)
+    def test_create_branch_success(self):
+        g = GitHubClient(self.creds)
+        self.assertEqual(201, g.create_branch('foo'))
+
+    @mock.patch("commitment.GitHubClient._get_head_sha", lambda x, y: 'foo')
+    @mock.patch('requests.request', mock_request_failure)
+    @mock.patch('requests.Response.json', mock_json)
+    def test_create_branch_failure(self):
+        g = GitHubClient(self.creds)
+        with self.assertRaises(requests.exceptions.HTTPError):
+            g.create_branch('foo')
 
 
 if __name__ == '__main__':
