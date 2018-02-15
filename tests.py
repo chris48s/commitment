@@ -60,7 +60,7 @@ class GitHubClientTests(unittest.TestCase):
 
     def test_get_payload_utf8_no_parent(self):
         g = GitHubClient(self.creds)
-        payload = json.loads(g._get_payload("abcd", "commit my file", "branch"))
+        payload = json.loads(g._get_contents_payload("abcd", "commit my file", "branch"))
         self.assertEqual("commit my file", payload['message'])
         self.assertEqual('branch', payload['branch'])
         self.assertEqual(self.creds.name, payload['committer']['name'])
@@ -72,12 +72,12 @@ class GitHubClientTests(unittest.TestCase):
         g = GitHubClient(self.creds)
         content = b'you\xe2\x80\x99re'.decode('windows-1252')
         payload = json.loads(
-            g._get_payload(content, "commit my file", "branch", encoding='windows-1252'))
+            g._get_contents_payload(content, "commit my file", "branch", encoding='windows-1252'))
         self.assertEqual(b'you\xe2\x80\x99re', base64.b64decode(payload['content']))
 
     def test_get_payload_with_parent(self):
         g = GitHubClient(self.creds)
-        payload = json.loads(g._get_payload("abcd", "commit my file", "branch", parent_sha='xyz'))
+        payload = json.loads(g._get_contents_payload("abcd", "commit my file", "branch", parent_sha='xyz'))
         self.assertEqual('xyz', payload['sha'])
 
     def test_get_blob_sha_invalid(self):

@@ -40,7 +40,7 @@ class GitHubClient:
         r.raise_for_status()
         return r.status_code
 
-    def _get_payload(self, content, message, branch, parent_sha=None, encoding='utf-8'):
+    def _get_contents_payload(self, content, message, branch, parent_sha=None, encoding='utf-8'):
         # assemble a payload we can use to make a request
         # to the /contents endpoint in the GitHub API
         # https://developer.github.com/v3/repos/contents/#create-a-file
@@ -116,7 +116,7 @@ class GitHubClient:
             if force_bytes(content, encoding) == repo_content:
                 payload = None
             else:
-                payload = self._get_payload(
+                payload = self._get_contents_payload(
                     content,
                     message,
                     branch,
@@ -125,7 +125,8 @@ class GitHubClient:
                 )
         except requests.exceptions.HTTPError as e:
             if e.response.status_code == 404:
-                payload = self._get_payload(content, message, branch, encoding=encoding)
+                payload = self._get_contents_payload(
+                    content, message, branch, encoding=encoding)
             else:
                 raise
 
