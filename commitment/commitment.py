@@ -26,6 +26,7 @@ class GitHubClient:
         if not isinstance(credentials, GitHubCredentials):
             raise TypeError('expected GitHubCredentials object')
         self.credentials = credentials
+        self.base_url = 'https://api.github.com/'
 
     def _get_payload(self, content, message, branch, parent_sha=None, encoding='utf-8'):
         # assemble a payload we can use to make a request
@@ -88,7 +89,7 @@ class GitHubClient:
                 raise
 
         if payload:
-            url = 'https://api.github.com/repos/%s/contents/%s' % (
+            url = self.base_url + 'repos/%s/contents/%s' % (
                 urllib.parse.quote(self.credentials.repo),
                 urllib.parse.quote(filename)
             )
