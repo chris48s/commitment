@@ -58,7 +58,7 @@ class GitHubClientTests(unittest.TestCase):
         g = GitHubClient(self.creds)
         self.assertIsInstance(g, GitHubClient)
 
-    def test_get_payload_utf8_no_parent(self):
+    def test_get_contents_payload_utf8_no_parent(self):
         g = GitHubClient(self.creds)
         payload = json.loads(g._get_contents_payload("abcd", "commit my file", "branch"))
         self.assertEqual("commit my file", payload['message'])
@@ -68,14 +68,14 @@ class GitHubClientTests(unittest.TestCase):
         self.assertEqual('YWJjZA==', payload['content'])
         self.assertFalse('sha' in payload)
 
-    def test_get_payload_windows1252(self):
+    def test_get_contents_payload_windows1252(self):
         g = GitHubClient(self.creds)
         content = b'you\xe2\x80\x99re'.decode('windows-1252')
         payload = json.loads(
             g._get_contents_payload(content, "commit my file", "branch", encoding='windows-1252'))
         self.assertEqual(b'you\xe2\x80\x99re', base64.b64decode(payload['content']))
 
-    def test_get_payload_with_parent(self):
+    def test_get_contents_payload_with_parent(self):
         g = GitHubClient(self.creds)
         payload = json.loads(g._get_contents_payload("abcd", "commit my file", "branch", parent_sha='xyz'))
         self.assertEqual('xyz', payload['sha'])
