@@ -6,7 +6,9 @@
 ![License](https://img.shields.io/pypi/l/commitment.svg)
 ![Python Support](https://img.shields.io/pypi/pyversions/commitment.svg)
 
-Python 3 wrapper to push data to a GitHub repo using the GitHub [contents api](https://developer.github.com/v3/repos/contents/)
+An incomplete Python 3 wrapper for the [GitHub API](https://developer.github.com/v3/).
+
+Note this project does not aim to provide a complete abstraction over the GitHub API - just a few high-level convenience methods for pushing data to a GitHub repo.
 
 ## Installation
 
@@ -21,7 +23,6 @@ from commitment import GitHubCredentials, GitHubClient
 
 credentials = GitHubCredentials(
     repo="myuser/somerepo",
-    branch='master',
     name="myuser",
     email="someone@example.com",
     api_key="f00b42",
@@ -29,5 +30,7 @@ credentials = GitHubCredentials(
 
 client = GitHubClient(credentials)
 
-g.push_file('Hello World!', 'directory/filename.txt', 'my commit message')
+client.create_branch('my_new_branch', base_branch='master')
+client.push_file('Hello World!', 'directory/filename.txt', 'my commit message', branch='my_new_branch')
+client.open_pull_request('my_new_branch', 'title', 'body', base_branch='master')
 ```
