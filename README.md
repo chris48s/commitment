@@ -2,16 +2,15 @@
 
 [![Build Status](https://travis-ci.org/chris48s/commitment.svg?branch=master)](https://travis-ci.org/chris48s/commitment)
 [![Coverage Status](https://coveralls.io/repos/github/chris48s/commitment/badge.svg?branch=master)](https://coveralls.io/github/chris48s/commitment?branch=master)
+![PyPI Version](https://img.shields.io/pypi/v/commitment.svg)
+![License](https://img.shields.io/pypi/l/commitment.svg)
+![Python Support](https://img.shields.io/pypi/pyversions/commitment.svg)
 
 Python 3 wrapper to push data to a GitHub repo using the GitHub [contents api](https://developer.github.com/v3/repos/contents/)
 
 ## Installation
 
 `pip install commitment`
-
-## Platform Support
-
-`commitment` is tested under Python 3.4, 3.5 and 3.6
 
 ## Usage
 
@@ -32,7 +31,3 @@ client = GitHubClient(credentials)
 
 g.push_file('Hello World!', 'directory/filename.txt', 'my commit message')
 ```
-
-## Licensing
-
-`commitment` is made available under the MIT License
