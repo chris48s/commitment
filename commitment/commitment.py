@@ -91,11 +91,11 @@ class GitHubClient:
         return data['object']['sha']
 
     def get_file_bytes(self, filename, branch='master'):
-        r = self.get_file(filename, branch)
+        r = self._get_file(filename, branch)
         return r.content
 
     def get_file_str(self, filename, branch='master'):
-        r = self.get_file(filename, branch)
+        r = self._get_file(filename, branch)
         return r.text
 
     def create_branch(self, new_branch, base_branch='master'):
