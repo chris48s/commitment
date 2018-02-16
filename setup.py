@@ -11,14 +11,22 @@ def _get_description():
 
 setup(
     name='commitment',
-    version='1.0.0',
+    version='2.0.0',
     author="chris48s",
     license="MIT",
-    description='Python 3 wrapper to push data to a GitHub repo using the GitHub contents api',
+    description='An incomplete Python 3 wrapper for the GitHub API',
     long_description=_get_description(),
     url="https://github.com/chris48s/commitment/",
     packages=['commitment'],
     install_requires=[
         'requests'
+    ],
+    classifiers=[
+        'License :: OSI Approved :: MIT License',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
     ],
 )
