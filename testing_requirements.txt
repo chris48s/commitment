@@ -1,2 +1,4 @@
 coverage
 python-coveralls
+setuptools>=38.6.0
+twine>=1.11.0
