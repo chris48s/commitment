@@ -1,5 +1,9 @@
 # Changelog
 
+## :package: [2.0.1](https://pypi.org/project/commitment/2.0.1/) - 2018-12-02
+
+Support python 3.7
+
 ## :package: [2.0.0](https://pypi.org/project/commitment/2.0.0/) - 2018-02-17
 
 ### Backwards-incompatible changes
