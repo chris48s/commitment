@@ -1,1 +1,1 @@
-from .commitment import GitHubCredentials, GitHubClient
+from .commitment import GitHubClient, GitHubCredentials  # noqa

@@ -5,6 +5,7 @@
 ![PyPI Version](https://img.shields.io/pypi/v/commitment.svg)
 ![License](https://img.shields.io/pypi/l/commitment.svg)
 ![Python Support](https://img.shields.io/pypi/pyversions/commitment.svg)
+![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)
 
 An incomplete Python 3 wrapper for the [GitHub API](https://developer.github.com/v3/).
 

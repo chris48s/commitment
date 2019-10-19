@@ -12,5 +12,8 @@ install:
   - poetry install
 script:
   - coverage run --source=commitment ./run_tests.py
+  - isort **/*.py -c --diff
+  - flake8 .
+  - if [[ $TRAVIS_PYTHON_VERSION == *3.[6-9]* ]]; then black --check .; fi
 after_success:
   - coveralls
