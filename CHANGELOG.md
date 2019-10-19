@@ -1,5 +1,10 @@
 # Changelog
 
+## :package: [2.0.2](https://pypi.org/project/commitment/2.0.2/) - 2019-10-19
+
+* Tested on python 3.8
+* Adopt poetry for packaging
+
 ## :package: [2.0.1](https://pypi.org/project/commitment/2.0.1/) - 2018-12-02
 
 Support python 3.7
