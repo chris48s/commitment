@@ -3,10 +3,12 @@
 
 import base64
 import json
-import requests
 import unittest
-from commitment import GitHubCredentials, GitHubClient
 from unittest import mock
+
+import requests
+
+from commitment import GitHubClient, GitHubCredentials
 
 
 # GitHubClient._get_file() mocks
