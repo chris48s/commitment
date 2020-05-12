@@ -15,7 +15,7 @@ requests = "2.*"
 [tool.poetry.dev-dependencies]
 coveralls = "^1.11.1"
 isort = "^4.3"
-flake8 = "^3.7.8 "
+flake8 = "^3.8.1"
 black = { version = "==19.10b0", allow-prereleases = true, python = "^3.6" }
 
 [build-system]
