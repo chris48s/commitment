@@ -2,7 +2,6 @@ sudo: false
 dist: xenial
 language: python
 python:
-  - '3.5'
   - '3.6'
   - '3.7'
   - '3.8'
@@ -12,7 +11,7 @@ install:
   - poetry install
 script:
   - coverage run --source=commitment ./run_tests.py
-  - isort -rc -c --diff .
+  - isort --profile black -c --diff .
   - flake8 .
   - if [[ $TRAVIS_PYTHON_VERSION == *3.[6-9]* ]]; then black --check .; fi
   - if [[ $TRAVIS_PYTHON_VERSION == *3.[6-9]* ]]; then poetry build; fi
