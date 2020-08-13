@@ -146,7 +146,7 @@ description = "A Python utility / library to sort Python imports."
 name = "isort"
 optional = false
 python-versions = ">=3.6,<4.0"
-version = "5.3.0"
+version = "5.4.0"
 
 [package.extras]
 colors = ["colorama (>=0.4.3,<0.5.0)"]
@@ -254,7 +254,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "d7aac67dab442c5a44dbe5d5e859de779350aae9a97f4a2567a13a6c760634d7"
+content-hash = "b6687ee980445db2b94d1d0c18a8015f4395733105dd6605dd8d7eb74a5f0b27"
 python-versions = "^3.6"
 
 [metadata.files]
@@ -338,8 +338,8 @@ importlib-metadata = [
     {file = "importlib_metadata-1.7.0.tar.gz", hash = "sha256:90bb658cdbbf6d1735b6341ce708fc7024a3e14e99ffdc5783edea9f9b077f83"},
 ]
 isort = [
-    {file = "isort-5.3.0-py3-none-any.whl", hash = "sha256:723de131d9ae9d2561844f0ee525ce33a396a11bcda57174f036ed5ab3d6a122"},
-    {file = "isort-5.3.0.tar.gz", hash = "sha256:cdca22530d093ed16983ba52c41560fa0219d1b958e44fd2ae2995dcc7b785be"},
+    {file = "isort-5.4.0-py3-none-any.whl", hash = "sha256:32bd1190ae0a5cc45f10fbe3fb85918b17441f8e51db51e67453972e9acb6c96"},
+    {file = "isort-5.4.0.tar.gz", hash = "sha256:2426f423a77bfb639ec67cf13ef7cb96f3521772b8831f099a777aae0c9ba571"},
 ]
 mccabe = [
     {file = "mccabe-0.6.1-py2.py3-none-any.whl", hash = "sha256:ab8a6258860da4b6677da4bd2fe5dc2c659cff31b3ee4f7f5d64e79735b80d42"},
