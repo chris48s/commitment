@@ -4,7 +4,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/chris48s/commitment/badge.svg?branch=master)](https://coveralls.io/github/chris48s/commitment?branch=master)
 ![PyPI Version](https://img.shields.io/pypi/v/commitment.svg)
 ![License](https://img.shields.io/pypi/l/commitment.svg)
-![Python Support](https://img.shields.io/pypi/pyversions/commitment.svg)
+![Python Compatibility](https://img.shields.io/badge/dynamic/json?query=info.requires_python&label=python&url=https%3A%2F%2Fpypi.org%2Fpypi%2Fcommitment%2Fjson)
 ![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)
 
 An incomplete Python 3 wrapper for the [GitHub API](https://developer.github.com/v3/).
