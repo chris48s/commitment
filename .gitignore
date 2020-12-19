@@ -1,6 +1,7 @@
 __pycache__/
 *.pyc
 .coverage
+coverage.xml
 build/
 commitment.egg-info/
 dist/
