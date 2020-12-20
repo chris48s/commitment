@@ -1,10 +1,13 @@
+# python cache files
 __pycache__/
 *.pyc
+
+# test coverage
 .coverage
 coverage.xml
+
+# build artifacts
 build/
 commitment.egg-info/
 dist/
 .eggs/
-MANIFEST
-README.rst
