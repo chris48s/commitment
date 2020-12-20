@@ -22,12 +22,10 @@ jobs:
           make install
 
       - name: Run tests
-        run: |
-          make test
+        run: make test
 
       - name: Check coding standards
-        run: |
-          make lint
+        run: make lint
 
       - name: Ensure package builds
         run: poetry build
