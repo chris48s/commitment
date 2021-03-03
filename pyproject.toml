@@ -13,7 +13,7 @@ python = "^3.6"
 requests = "2.*"
 
 [tool.poetry.dev-dependencies]
-coverage = "^5.4"
+coverage = "^5.5"
 isort = "^5.7"
 flake8 = "^3.8.4"
 black = { version = "==20.8b1", allow-prereleases = true }
