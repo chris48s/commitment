@@ -1,5 +1,10 @@
 # Changelog
 
+## :package: [3.0.0](https://pypi.org/project/commitment/3.0.0/) - 2021-10-17
+
+* Dropped testing on python < 3.7
+* Tested on python 3.9, 3.10
+
 ## :package: [2.0.2](https://pypi.org/project/commitment/2.0.2/) - 2019-10-19
 
 * Tested on python 3.8
