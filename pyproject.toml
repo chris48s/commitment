@@ -16,7 +16,7 @@ requests = "2.*"
 coverage = "^6.4"
 isort = "^5.10"
 flake8 = "^4.0.1"
-black = "==22.3.0"
+black = "==22.6.0"
 
 [build-system]
 requires = ["poetry>=1.0.2"]
