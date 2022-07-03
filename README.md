@@ -1,6 +1,6 @@
 # commitment
 
-![Run tests](https://github.com/chris48s/commitment/workflows/Run%20tests/badge.svg?branch=master)
+[![Run tests](https://github.com/chris48s/commitment/actions/workflows/test.yml/badge.svg?branch=master)](https://github.com/chris48s/commitment/actions/workflows/test.yml)
 [![codecov](https://codecov.io/gh/chris48s/commitment/branch/master/graph/badge.svg?token=4BL8HL7913)](https://codecov.io/gh/chris48s/commitment)
 ![PyPI Version](https://img.shields.io/pypi/v/commitment.svg)
 ![License](https://img.shields.io/pypi/l/commitment.svg)
