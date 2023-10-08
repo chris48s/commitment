@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "commitment"
-version = "3.0.0"
+version = "3.0.1"
 description = "An incomplete Python 3 wrapper for the GitHub API"
 authors = ["chris48s"]
 license = "MIT"

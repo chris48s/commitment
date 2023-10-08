@@ -1,5 +1,10 @@
 # Changelog
 
+## :package: [3.0.1](https://pypi.org/project/commitment/3.0.1/) - 2023-10-08
+
+* Convert python requirement to open range
+* Tested on python 3.11, 3.12
+
 ## :package: [3.0.0](https://pypi.org/project/commitment/3.0.0/) - 2021-10-17
 
 * Dropped testing on python < 3.7
