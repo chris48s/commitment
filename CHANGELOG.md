@@ -1,5 +1,37 @@
 # Changelog
 
+## :package: 4.0.0 - TODO
+
+* Drop compatibility with python 3.7 and 3.8
+
+* `create_branch`, `push_file` and `open_pull_request` methods now return a `Response` object instead of a status code.
+  If your previous code was
+
+  ```py
+  client = GitHubClient(...)
+  status_code = client.create_branch("foo")
+  assert status_code == 201
+  ```
+
+  update to
+
+  ```py
+  client = GitHubClient(...)
+  res = client.create_branch("foo")
+  assert res.status_code == 201
+  ```
+
+* Use github contents API instead of `raw.githubusercontent` to get existing file content.
+  This comes with some tradeoffs:
+
+  * Using the contents API means this works with private repositories. Previously this library only worked for public repos
+  * Because `raw.githubusercontent` responses are cached, switching to the contents API eliminates some possible race conditions
+  * The contents API does not work for files greater than 100Mb
+  * Each call to `push_file` uses an additional rate limit point
+
+  On balance, this change should be an improvement.
+
+
 ## :package: [3.0.1](https://pypi.org/project/commitment/3.0.1/) - 2023-10-08
 
 * Convert python requirement to open range
