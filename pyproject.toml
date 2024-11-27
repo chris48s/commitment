@@ -9,13 +9,13 @@ repository = "https://github.com/chris48s/commitment"
 homepage = "https://github.com/chris48s/commitment"
 
 [tool.poetry.dependencies]
-python = ">=3.7"
+python = ">=3.9"
 requests = "2.*"
 
 [tool.poetry.dev-dependencies]
 coverage = "^7.2"
 isort = "^5.11"
-flake8 = { version = "^7.1.1", python = "^3.8.1" }
+flake8 = "^7.1.1"
 black = "==23.3.0"
 
 [build-system]
