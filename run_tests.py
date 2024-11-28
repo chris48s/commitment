@@ -119,7 +119,7 @@ class GitHubClientTests(unittest.TestCase):
         res = g.push_file("foo", "foo/bar.baz", "my commit message")
         # If no remote content exists
         # push_file() should push the local content
-        self.assertEqual(201, res)
+        self.assertEqual(201, res.status_code)
 
     @mock.patch("commitment.GitHubClient.get_file_bytes", mock_get_file_return_foo)
     @mock.patch("requests.request", mock_request_success)
@@ -128,7 +128,7 @@ class GitHubClientTests(unittest.TestCase):
         res = g.push_file("bar", "foo/bar.baz", "my commit message")
         # If remote content != local content
         # push_file() should push the local content
-        self.assertEqual(201, res)
+        self.assertEqual(201, res.status_code)
 
     @mock.patch("commitment.GitHubClient.get_file_bytes", mock_get_file_raise_500)
     def test_push_file_remote_file_raises_500(self):
@@ -163,7 +163,8 @@ class GitHubClientTests(unittest.TestCase):
     @mock.patch("requests.request", mock_request_success)
     def test_open_pull_request_success(self):
         g = GitHubClient(self.creds)
-        self.assertEqual(201, g.open_pull_request("foo", "bar", "baz"))
+        res = g.open_pull_request("foo", "bar", "baz")
+        self.assertEqual(201, res.status_code)
 
     @mock.patch("requests.request", mock_request_failure)
     @mock.patch("requests.Response.json", mock_json)
@@ -176,7 +177,8 @@ class GitHubClientTests(unittest.TestCase):
     @mock.patch("requests.request", mock_request_success)
     def test_create_branch_success(self):
         g = GitHubClient(self.creds)
-        self.assertEqual(201, g.create_branch("foo"))
+        res = g.create_branch("foo")
+        self.assertEqual(201, res.status_code)
 
     @mock.patch("commitment.GitHubClient._get_head_sha", lambda x, y: "foo")
     @mock.patch("requests.request", mock_request_failure)

@@ -27,17 +27,19 @@ class GitHubClient:
         self.credentials = credentials
         self.base_url = "https://api.github.com/"
 
-    def _request(self, method, url, payload):
+    def _request(self, method, url, data=None, params=None, headers={}):
+        headers["Authorization"] = "token %s" % (self.credentials.api_key)
         r = requests.request(
             method,
             url,
-            data=payload,
-            headers={"Authorization": "token %s" % (self.credentials.api_key)},
+            data=data,
+            params=params,
+            headers=headers,
         )
         if r.status_code not in [200, 201]:
             print(r.json())
         r.raise_for_status()
-        return r.status_code
+        return r
 
     def _get_contents_payload(
         self, content, message, branch, parent_sha=None, encoding="utf-8"
@@ -61,14 +63,16 @@ class GitHubClient:
         return json.dumps(payload)
 
     def _get_file(self, filename, branch):
-        url = "https://raw.githubusercontent.com/%s/%s/%s" % (
+        url = "https://api.github.com/repos/%s/contents/%s" % (
             urllib.parse.quote(self.credentials.repo),
-            urllib.parse.quote(branch),
             urllib.parse.quote(filename),
         )
-        r = requests.get(url)
-        r.raise_for_status()
-        return r
+        return self._request(
+            "GET",
+            url,
+            params={"ref": branch},
+            headers={"Accept": "application/vnd.github.raw+json"},
+        )
 
     def _get_blob_sha(self, data):
         # work out the git SHA of a blob
@@ -108,7 +112,7 @@ class GitHubClient:
                 "sha": self._get_head_sha(base_branch),
             }
         )
-        return self._request("POST", url, payload)
+        return self._request("POST", url, data=payload)
 
     def push_file(self, content, filename, message, branch="master", encoding="utf-8"):
         try:
@@ -138,7 +142,7 @@ class GitHubClient:
                 urllib.parse.quote(self.credentials.repo),
                 urllib.parse.quote(filename),
             )
-            return self._request("PUT", url, payload)
+            return self._request("PUT", url, data=payload)
         else:
             return None
 
@@ -155,4 +159,4 @@ class GitHubClient:
                 "maintainer_can_modify": True,
             }
         )
-        return self._request("POST", url, payload)
+        return self._request("POST", url, data=payload)
