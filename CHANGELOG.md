@@ -1,6 +1,6 @@
 # Changelog
 
-## :package: 4.0.0 - TODO
+## :package: [4.0.0](https://pypi.org/project/commitment/4.0.0/) - 2024-11-28
 
 * Drop compatibility with python 3.7 and 3.8
 
