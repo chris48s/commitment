@@ -1,5 +1,10 @@
 # Changelog
 
+## :package: [4.1.0](https://pypi.org/project/commitment/4.1.0/) - 2025-10-12
+
+* Dropped testing on python < 3.10
+* Tested on python 3.14
+
 ## :package: [4.0.0](https://pypi.org/project/commitment/4.0.0/) - 2024-11-28
 
 * Drop compatibility with python 3.7 and 3.8
