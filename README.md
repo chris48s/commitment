@@ -35,3 +35,9 @@ client.create_branch('my_new_branch', base_branch='master')
 client.push_file('Hello World!', 'directory/filename.txt', 'my commit message', branch='my_new_branch')
 client.open_pull_request('my_new_branch', 'title', 'body', base_branch='master')
 ```
+
+## Versioning
+
+commitment follows [semantic versioning](https://semver.org/).
+
+From version 4 onwards, commitment will drop compatibility with unsupported python versions without incrementing the major version. This is in line with common practice in the python community.
