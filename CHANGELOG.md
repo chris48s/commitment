@@ -1,5 +1,9 @@
 # Changelog
 
+## :package: [4.1.1](https://pypi.org/project/commitment/4.1.1/) - 2025-10-22
+
+* Fix build build-backend declaration
+
 ## :package: [4.1.0](https://pypi.org/project/commitment/4.1.0/) - 2025-10-12
 
 * Dropped testing on python < 3.10
